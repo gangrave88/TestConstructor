@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Конструктор тестов</string>
+    <string name="my_test">Мои тесты</string>
+    <string name="list_test">Список тестов</string>
+    <string name="stat">Статистика</string>
+    <string name="name_test">Название теста</string>
+    <string name="complexity">Сложность</string>
+    <string name="question">Вопрос</string>
+    <string name="option">Вариант</string>
+    <string name="new_test">Новый тест</string>
+    <string name="new_question">Новый вопрос</string>
+    <string name="question_text">Текст вопроса</string>
+    <string name="answer1">Ответ 1</string>
+    <string name="answer2">Ответ 2</string>
+    <string name="answer3">Ответ 3</string>
+    <string name="answer4">Ответ 4</string>
+    <string name="answer">Ответы:</string>
+    <string name="save">Записать</string>
+</resources>
