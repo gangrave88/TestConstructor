@@ -3,16 +3,22 @@ package com.gangrave88.testconstructor;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class NewTest extends Activity{
 
     List<Question> questions;
+    @BindView(R.id.name_test)TextView name_test;
+    @BindView(R.id.complexity)SeekBar complexity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,13 @@ public class NewTest extends Activity{
         Intent intent = new Intent(this, NewQuestion.class);
         startActivityForResult(intent,1);
     }
+
+    @OnClick(R.id.save_test)
+    public void saveTest(){
+        Test test = new Test(name_test.toString(),complexity.getProgress(),questions);
+        finish();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
