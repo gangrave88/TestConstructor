@@ -8,14 +8,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewQuestion extends Activity {
+public class NewQuestion extends Activity implements Serializable{
 
     @BindView(R.id.question)TextView questianTV;
     @BindView(R.id.answer1) TextView answer1TV;
@@ -36,45 +34,41 @@ public class NewQuestion extends Activity {
     }
 
     @OnClick(R.id.save_question)
-    private void seveQuestion(){
+    public void saveQuestion(){
         if (checkQuestian()){
-            sendResult(createAnsver());
+            sendResult();
         }
         else{
             textViewEmpty();
         }
     }
 
-    private List<Answer> createAnsver(){
-        List<Answer> list = new ArrayList<>();
-
-        list.add(new Answer(answer1TV.toString(),answer1Ch.isChecked()));
-        list.add(new Answer(answer2TV.toString(),answer2Ch.isChecked()));
-        list.add(new Answer(answer3TV.toString(),answer3Ch.isChecked()));
-        list.add(new Answer(answer4TV.toString(),answer4Ch.isChecked()));
-
-        return list;
-    }
-
-    private void sendResult(List<Answer> answerList){
+    private void sendResult(){
         Intent intent = new Intent();
-        Question question = new Question(questianTV.toString(),answerList);
-        intent.putExtra("list", (Serializable) question);
+        intent.putExtra("question", questianTV.toString());
+        intent.putExtra("answer1TV", answer1TV.toString());
+        intent.putExtra("answer2TV", answer2TV.toString());
+        intent.putExtra("answer3TV", answer3TV.toString());
+        intent.putExtra("answer4TV", answer4TV.toString());
+        intent.putExtra("answer1Ch", answer1Ch.isChecked());
+        intent.putExtra("answer2Ch", answer2Ch.isChecked());
+        intent.putExtra("answer3Ch", answer3Ch.isChecked());
+        intent.putExtra("answer4Ch", answer4Ch.isChecked());
+        setResult(RESULT_OK,intent);
+        finish();
     }
 
     private void textViewEmpty(){
-        Toast toast = new Toast(this);
-        toast.setText("Не все поля заполнены!!!");
-        toast.show();
+        Toast.makeText(this,"Не все поля заполнены!",Toast.LENGTH_LONG).show();
     }
 
     private boolean checkQuestian(){
         boolean ok = true;
-        if (questianTV.equals(""))ok=false;
-        if (answer1TV.equals(""))ok=false;
-        if (answer2TV.equals(""))ok=false;
-        if (answer3TV.equals(""))ok=false;
-        if (answer4TV.equals(""))ok=false;
+        if (questianTV.toString().equals(""))ok=false;
+        if (answer1TV.toString().equals(""))ok=false;
+        if (answer2TV.toString().equals(""))ok=false;
+        if (answer3TV.toString().equals(""))ok=false;
+        if (answer4TV.toString().equals(""))ok=false;
         if (answer1Ch.isChecked()==false && answer2Ch.isChecked()==false
                 && answer3Ch.isChecked()==false && answer4Ch.isChecked()==false) ok=false;
         return ok;
