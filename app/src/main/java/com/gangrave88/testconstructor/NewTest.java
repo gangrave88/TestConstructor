@@ -3,6 +3,7 @@ package com.gangrave88.testconstructor;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class NewTest extends Activity{
     RealmList<Question> questions;
     @BindView(R.id.name_test)TextView name_test;
     @BindView(R.id.complexity)SeekBar complexity;
+    @BindView(R.id.question_list) ListView question_list;
 
 
     @Override
@@ -25,12 +27,15 @@ public class NewTest extends Activity{
         setContentView(R.layout.new_test);
 
         ButterKnife.bind(this);
+
+        setQuestionsList();
     }
 
     @OnClick(R.id.new_question)
     public void newQuestion(){
         Intent intent = new Intent(this, NewQuestion.class);
         startActivityForResult(intent,1);
+        setQuestionsList();
     }
 
     @OnClick(R.id.save_test)
@@ -45,7 +50,6 @@ public class NewTest extends Activity{
         finish();
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode==RESULT_OK) {
@@ -58,5 +62,10 @@ public class NewTest extends Activity{
 
             questions.add(question);
         }
+    }
+
+    private void setQuestionsList(){
+//        QuestionAdapter questionAdapter = new QuestionAdapter(this,questions);
+//        question_list.setAdapter(questionAdapter);
     }
 }

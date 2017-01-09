@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewQuestion extends Activity implements Serializable{
+public class NewQuestion extends Activity{
 
     @BindView(R.id.question)TextView questianTV;
     @BindView(R.id.answer1) TextView answer1TV;

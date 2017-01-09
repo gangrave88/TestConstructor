@@ -9,6 +9,10 @@ public class Question extends RealmObject{
     public String question;
     public RealmList<Answer> answers;
 
+    public Question() {
+        super();
+    }
+
     public Question(String question, RealmList<Answer> answers) {
         this.question = question;
         this.answers = answers;

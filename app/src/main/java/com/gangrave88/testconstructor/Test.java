@@ -10,6 +10,10 @@ public class Test extends RealmObject{
     public int complexity;
     public RealmList<Question> questions;
 
+    public Test() {
+        super();
+    }
+
     public Test(String name, int complexity, RealmList<Question> questions) {
         this.name = name;
         this.complexity = complexity;

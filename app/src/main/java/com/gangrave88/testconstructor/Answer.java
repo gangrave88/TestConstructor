@@ -7,6 +7,10 @@ public class Answer extends RealmObject{
     public String answer;
     public boolean correct;
 
+    public Answer() {
+        super();
+    }
+
     public Answer(String answer, boolean correct) {
         this.answer = answer;
         this.correct = correct;
