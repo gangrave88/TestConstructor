@@ -6,16 +6,15 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmList;
 
 public class NewTest extends Activity{
 
-    List<Question> questions;
+    RealmList<Question> questions;
     @BindView(R.id.name_test)TextView name_test;
     @BindView(R.id.complexity)SeekBar complexity;
 
@@ -36,7 +35,13 @@ public class NewTest extends Activity{
 
     @OnClick(R.id.save_test)
     public void saveTest(){
+        Realm realm = Realm.getDefaultInstance();
         Test test = new Test(name_test.toString(),complexity.getProgress(),questions);
+
+        realm.beginTransaction();
+        realm.copyToRealm(test);
+        realm.commitTransaction();
+
         finish();
     }
 
@@ -44,7 +49,7 @@ public class NewTest extends Activity{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode==RESULT_OK) {
-            List<Answer> answers = new ArrayList<>();
+            RealmList<Answer> answers = new RealmList<>();
             answers.add(new Answer(data.getStringExtra("answer1TV"),data.getBooleanExtra("answer1Ch",false)));
             answers.add(new Answer(data.getStringExtra("answer2TV"),data.getBooleanExtra("answer2Ch",false)));
             answers.add(new Answer(data.getStringExtra("answer3TV"),data.getBooleanExtra("answer3Ch",false)));

@@ -1,6 +1,8 @@
 package com.gangrave88.testconstructor;
 
-public class Answer {
+import io.realm.RealmObject;
+
+public class Answer extends RealmObject{
 
     public String answer;
     public boolean correct;

@@ -2,12 +2,15 @@ package com.gangrave88.testconstructor;
 
 import java.util.List;
 
-public class Test{
+import io.realm.RealmList;
+import io.realm.RealmObject;
+
+public class Test extends RealmObject{
     public String name;
     public int complexity;
-    public List<Question> questions;
+    public RealmList<Question> questions;
 
-    public Test(String name, int complexity, List<Question> questions) {
+    public Test(String name, int complexity, RealmList<Question> questions) {
         this.name = name;
         this.complexity = complexity;
         this.questions = questions;
@@ -33,7 +36,7 @@ public class Test{
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(RealmList<Question> questions) {
         this.questions = questions;
     }
 }
