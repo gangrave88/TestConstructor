@@ -20,7 +20,7 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".NewQuestion">
+        <activity android:name=".NewQuestionList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>

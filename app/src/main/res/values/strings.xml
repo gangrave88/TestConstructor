@@ -16,4 +16,6 @@
     <string name="answer4">Ответ 4</string>
     <string name="answer">Ответы:</string>
     <string name="save">Записать</string>
+    <string name="next">Следующий</string>
+    <string name="previous">Предыдущий</string>
 </resources>

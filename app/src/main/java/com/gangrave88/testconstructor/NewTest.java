@@ -33,7 +33,7 @@ public class NewTest extends Activity{
 
     @OnClick(R.id.new_question)
     public void newQuestion(){
-        Intent intent = new Intent(this, NewQuestion.class);
+        Intent intent = new Intent(this, NewQuestionList.class);
         startActivityForResult(intent,1);
         setQuestionsList();
     }
