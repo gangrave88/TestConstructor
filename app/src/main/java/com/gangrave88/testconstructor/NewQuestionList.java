@@ -3,6 +3,7 @@ package com.gangrave88.testconstructor;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -43,8 +44,6 @@ public class NewQuestionList extends Activity{
 
         questions = new ArrayList<>();
         currentItem = 0;
-
-//        btnEnabled();
     }
 
     @OnClick(R.id.save_question)
@@ -57,51 +56,51 @@ public class NewQuestionList extends Activity{
 
     @OnClick(R.id.next)
     public void nextQuestion(){
-        if (checkView()){
-            createQuestion();
-            currentItem++;
-            readQuestion();
-        }
-        else Toast.makeText(this,"Не все поля заполнены!",Toast.LENGTH_SHORT).show();
-//        btnEnabled();
+//        if (checkView()){
+        create_update_Question();
+        currentItem++;
+        checkQuestion();
+//        }
+//        else Toast.makeText(this,"Не все поля заполнены!",Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.previous)
     public void previousQuestion(){
+        create_update_Question();
         currentItem--;
-        readQuestion();
-//        btnEnabled();
+        checkQuestion();
     }
 
-//    private void btnEnabled(){
-//        if (currentItem==0 || questions.size()==0) btnPrevious.setEnabled(false);
-//    }
+
+    private void checkQuestion(){
+        if (questions.isEmpty() || questions.size()-1<currentItem) clearView();
+        else readQuestion();
+    }
+
+    private void clearView(){
+        questionET.setText("");
+        answer1ET.setText("");
+        answer2ET.setText("");
+        answer3ET.setText("");
+        answer4ET.setText("");
+        chAnswerCorrect1.setChecked(false);
+        chAnswerCorrect2.setChecked(false);
+        chAnswerCorrect3.setChecked(false);
+        chAnswerCorrect4.setChecked(false);
+    }
 
     private void readQuestion(){
         Question currentQuestion = questions.get(currentItem);
-        if (currentQuestion==null){
-            questionET.setText("");
-            answer1ET.setText("");
-            answer2ET.setText("");
-            answer3ET.setText("");
-            answer4ET.setText("");
-            chAnswerCorrect1.setEnabled(false);
-            chAnswerCorrect2.setEnabled(false);
-            chAnswerCorrect3.setEnabled(false);
-            chAnswerCorrect4.setEnabled(false);
-        }
-        else{
-            questionET.setText(currentQuestion.getQuestion());
-            List<Answer> answers = currentQuestion.getAnswers();
-            answer1ET.setText(answers.get(0).getAnswer());
-            answer2ET.setText(answers.get(1).getAnswer());
-            answer3ET.setText(answers.get(2).getAnswer());
-            answer4ET.setText(answers.get(3).getAnswer());
-            chAnswerCorrect1.setEnabled(answers.get(0).isCorrect());
-            chAnswerCorrect2.setEnabled(answers.get(1).isCorrect());
-            chAnswerCorrect3.setEnabled(answers.get(2).isCorrect());
-            chAnswerCorrect4.setEnabled(answers.get(3).isCorrect());
-        }
+        questionET.setText(currentQuestion.getQuestion());
+        RealmList<Answer> answers = currentQuestion.getAnswers();
+        answer1ET.setText(answers.get(0).getAnswer());
+        answer2ET.setText(answers.get(1).getAnswer());
+        answer3ET.setText(answers.get(2).getAnswer());
+        answer4ET.setText(answers.get(3).getAnswer());
+        chAnswerCorrect1.setChecked(answers.get(0).isCorrect());
+        chAnswerCorrect2.setChecked(answers.get(1).isCorrect());
+        chAnswerCorrect3.setChecked(answers.get(2).isCorrect());
+        chAnswerCorrect4.setChecked(answers.get(3).isCorrect());
     }
 
     private boolean checkView(){
@@ -118,11 +117,8 @@ public class NewQuestionList extends Activity{
         return ok;
     }
 
-    private void createQuestion(){
-        Question currentQuestion;
-        if (questions.isEmpty()) {currentQuestion=null;}
-        else {currentQuestion = questions.get(currentItem);}
-        if (currentQuestion==null){
+    private void create_update_Question(){
+        if (questions.isEmpty() || currentItem>questions.size()){
             RealmList<Answer> answers = new RealmList<>();
             answers.add(new Answer(answer1ET.toString(),chAnswerCorrect1.isChecked()));
             answers.add(new Answer(answer2ET.toString(),chAnswerCorrect2.isChecked()));
@@ -131,6 +127,7 @@ public class NewQuestionList extends Activity{
             questions.add(new Question(questionET.toString(),answers));
         }
         else {
+            Question currentQuestion = new Question();
             currentQuestion.setQuestion(questionET.toString());
             currentQuestion.answers.get(0).setAnswer(answer1ET.toString());
             currentQuestion.answers.get(1).setAnswer(answer2ET.toString());
@@ -140,6 +137,7 @@ public class NewQuestionList extends Activity{
             currentQuestion.answers.get(1).setCorrect(chAnswerCorrect2.isChecked());
             currentQuestion.answers.get(2).setCorrect(chAnswerCorrect3.isChecked());
             currentQuestion.answers.get(3).setCorrect(chAnswerCorrect4.isChecked());
+            questions.set(currentItem,currentQuestion);
         }
     }
 }

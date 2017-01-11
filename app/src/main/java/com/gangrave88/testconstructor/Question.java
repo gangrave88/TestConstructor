@@ -26,7 +26,7 @@ public class Question extends RealmObject{
         this.question = question;
     }
 
-    public List<Answer> getAnswers() {
+    public RealmList<Answer> getAnswers() {
         return answers;
     }
 
