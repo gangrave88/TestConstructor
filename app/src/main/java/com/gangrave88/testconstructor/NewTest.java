@@ -35,7 +35,6 @@ public class NewTest extends Activity{
     public void newQuestion(){
         Intent intent = new Intent(this, NewQuestionList.class);
         startActivityForResult(intent,1);
-        setQuestionsList();
     }
 
     @OnClick(R.id.save_test)

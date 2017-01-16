@@ -1,12 +1,15 @@
 package com.gangrave88.testconstructor;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class NewQuestionList extends Activity{
     @BindView(R.id.answer2)EditText answer2ET;
     @BindView(R.id.answer3)EditText answer3ET;
     @BindView(R.id.answer4)EditText answer4ET;
+    @BindView(R.id.number)TextView numberTV;
     @BindView(R.id.answer_correct1)CheckBox chAnswerCorrect1;
     @BindView(R.id.answer_correct2)CheckBox chAnswerCorrect2;
     @BindView(R.id.answer_correct3)CheckBox chAnswerCorrect3;
@@ -43,14 +47,21 @@ public class NewQuestionList extends Activity{
 
         questions = new ArrayList<>();
         currentItem = 0;
+
+        btnEnableDisable();
+
+        updateNumber();
     }
 
     @OnClick(R.id.save_question)
     public void saveQuestion(){
-//        Intent intent = new Intent();
-//        intent.putParcelableArrayListExtra("questions",questions);
-//        setResult(RESULT_OK,intent);
-//        finish();
+        if (checkView()){
+            createQuestion();
+        }
+        Intent intent = new Intent();
+        intent.putParcelableArrayListExtra("questions",questions);
+        setResult(RESULT_OK,intent);
+        finish();
     }
 
     @OnClick(R.id.next)
@@ -59,21 +70,31 @@ public class NewQuestionList extends Activity{
             checkUpdateCreate();
             currentItem++;
             checkClearRead();
+            btnEnableDisable();
         }
         else {
             masage();
         }
+        updateNumber();
     }
 
     @OnClick(R.id.previous)
     public void previousQuestion(){
-        if(checkView()){
-            checkUpdateCreate();
-            currentItem--;
-            checkClearRead();
+        if (!checkAllEmpty()) {
+            ask();
+        }
+        currentItem--;
+        checkClearRead();
+        btnEnableDisable();
+        updateNumber();
+    }
+
+    private void btnEnableDisable(){
+        if(currentItem==0){
+            btnPrevious.setEnabled(false);
         }
         else{
-            masage();
+            btnPrevious.setEnabled(true);
         }
     }
 
@@ -109,6 +130,14 @@ public class NewQuestionList extends Activity{
         chAnswerCorrect2.setChecked(false);
         chAnswerCorrect3.setChecked(false);
         chAnswerCorrect4.setChecked(false);
+    }
+
+    private boolean checkAllEmpty(){
+        return questionET.toString().isEmpty() && answer1ET.toString().isEmpty() &&
+                answer2ET.toString().isEmpty() && answer3ET.toString().isEmpty() &&
+                answer4ET.toString().isEmpty() && chAnswerCorrect1.isChecked()==false &&
+                chAnswerCorrect2.isChecked()==false && chAnswerCorrect3.isChecked()==false &&
+                chAnswerCorrect4.isChecked()==false;
     }
 
     private boolean checkView(){
@@ -155,5 +184,26 @@ public class NewQuestionList extends Activity{
         chAnswerCorrect2.setChecked(answers.get(1).isCorrect());
         chAnswerCorrect3.setChecked(answers.get(2).isCorrect());
         chAnswerCorrect4.setChecked(answers.get(3).isCorrect());
+    }
+
+    private void ask(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Сохранить вопрос?");
+        alertDialog.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                createQuestion();
+            }
+        });
+        alertDialog.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alertDialog.show();
+    }
+
+    private void updateNumber(){
+        numberTV.setText(String.valueOf(currentItem + 1));
     }
 }
