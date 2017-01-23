@@ -2,6 +2,7 @@ package com.gangrave88.testconstructor;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,24 +18,38 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 import io.realm.RealmList;
 
-public class NewQuestionList extends Activity{
+public class NewQuestionList extends Activity {
 
-    ArrayList<Question> questions;
+    RealmList<Question> questions;
     int currentItem;
+    String name;
+    int complexity;
 
-    @BindView(R.id.previous)Button btnPrevious;
-    @BindView(R.id.question)EditText questionET;
-    @BindView(R.id.answer1)EditText answer1ET;
-    @BindView(R.id.answer2)EditText answer2ET;
-    @BindView(R.id.answer3)EditText answer3ET;
-    @BindView(R.id.answer4)EditText answer4ET;
-    @BindView(R.id.number)TextView numberTV;
-    @BindView(R.id.answer_correct1)CheckBox chAnswerCorrect1;
-    @BindView(R.id.answer_correct2)CheckBox chAnswerCorrect2;
-    @BindView(R.id.answer_correct3)CheckBox chAnswerCorrect3;
-    @BindView(R.id.answer_correct4)CheckBox chAnswerCorrect4;
+    @BindView(R.id.previous)
+    Button btnPrevious;
+    @BindView(R.id.question)
+    EditText questionET;
+    @BindView(R.id.answer1)
+    EditText answer1ET;
+    @BindView(R.id.answer2)
+    EditText answer2ET;
+    @BindView(R.id.answer3)
+    EditText answer3ET;
+    @BindView(R.id.answer4)
+    EditText answer4ET;
+    @BindView(R.id.number)
+    TextView numberTV;
+    @BindView(R.id.answer_correct1)
+    CheckBox chAnswerCorrect1;
+    @BindView(R.id.answer_correct2)
+    CheckBox chAnswerCorrect2;
+    @BindView(R.id.answer_correct3)
+    CheckBox chAnswerCorrect3;
+    @BindView(R.id.answer_correct4)
+    CheckBox chAnswerCorrect4;
 
 
     @Override
@@ -45,7 +60,12 @@ public class NewQuestionList extends Activity{
 
         ButterKnife.bind(this);
 
-        questions = new ArrayList<>();
+        Intent intent = getIntent();
+
+        name = intent.getStringExtra("name");
+        complexity = intent.getIntExtra("complexity",3);
+
+        questions = new RealmList<>();
         currentItem = 0;
 
         btnEnableDisable();
@@ -54,73 +74,77 @@ public class NewQuestionList extends Activity{
     }
 
     @OnClick(R.id.save_question)
-    public void saveQuestion(){
-        if (checkView()){
+    public void saveQuestion() {
+        if(currentItem>questions.size()-1){
             createQuestion();
         }
-        Intent intent = new Intent();
-        intent.putParcelableArrayListExtra("questions",questions);
-        setResult(RESULT_OK,intent);
-        finish();
+        else {
+            updateQuestion();
+        }
+        //Write to DB
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Test test = realm.createObject(Test.class);
+        test.setName(name);
+        test.setComplexity(complexity);
+        test.setQuestions(questions);
+        realm.commitTransaction();
     }
 
     @OnClick(R.id.next)
-    public void nextQuestion(){
-        if (checkView()) {
-            checkUpdateCreate();
-            currentItem++;
-            checkClearRead();
-            btnEnableDisable();
-        }
-        else {
-            masage();
-        }
+    public void nextQuestion() {
+//        if (checkView()) {
+        checkUpdateCreate();
+        currentItem++;
+        checkClearRead();
+        btnEnableDisable();
+//        }
+//        else {
+//            masage();
+//        }
         updateNumber();
     }
 
     @OnClick(R.id.previous)
-    public void previousQuestion(){
-        if (!checkAllEmpty()) {
-            ask();
-        }
+    public void previousQuestion() {
+//        if (!checkAllEmpty()) {
+//            ask();
+//        }
         currentItem--;
         checkClearRead();
         btnEnableDisable();
         updateNumber();
     }
 
-    private void btnEnableDisable(){
-        if(currentItem==0){
+    private void btnEnableDisable() {
+        if (currentItem == 0) {
             btnPrevious.setEnabled(false);
-        }
-        else{
+        } else {
             btnPrevious.setEnabled(true);
         }
     }
 
-    private void masage(){
-        Toast.makeText(this,"Не все поля заполнены!",Toast.LENGTH_SHORT).show();
-    }
+//    private void masage(){
+//        Toast.makeText(this,"Не все поля заполнены!",Toast.LENGTH_SHORT).show();
+//    }
 
-    private void checkUpdateCreate(){
-        if(questions.isEmpty() || currentItem>questions.size()-1) {
+    private void checkUpdateCreate() {
+        if (questions.isEmpty() || currentItem > questions.size() - 1) {
             createQuestion();
-        }
-        else{
+        } else {
             updateQuestion();
         }
     }
 
-    private void checkClearRead(){
-        if(currentItem<=questions.size()-1){
+    private void checkClearRead() {
+        if (currentItem <= questions.size() - 1) {
             readQuestion();
-        }
-        else{
+        } else {
             clearView();
         }
     }
 
-    private void clearView(){
+    private void clearView() {
         questionET.setText("");
         answer1ET.setText("");
         answer2ET.setText("");
@@ -132,47 +156,47 @@ public class NewQuestionList extends Activity{
         chAnswerCorrect4.setChecked(false);
     }
 
-    private boolean checkAllEmpty(){
-        return questionET.toString().isEmpty() && answer1ET.toString().isEmpty() &&
-                answer2ET.toString().isEmpty() && answer3ET.toString().isEmpty() &&
-                answer4ET.toString().isEmpty() && chAnswerCorrect1.isChecked()==false &&
-                chAnswerCorrect2.isChecked()==false && chAnswerCorrect3.isChecked()==false &&
-                chAnswerCorrect4.isChecked()==false;
-    }
+//    private boolean checkAllEmpty(){
+//        return questionET.toString().isEmpty() && answer1ET.toString().isEmpty() &&
+//                answer2ET.toString().isEmpty() && answer3ET.toString().isEmpty() &&
+//                answer4ET.toString().isEmpty() && chAnswerCorrect1.isChecked()==false &&
+//                chAnswerCorrect2.isChecked()==false && chAnswerCorrect3.isChecked()==false &&
+//                chAnswerCorrect4.isChecked()==false;
+//    }
 
-    private boolean checkView(){
-        boolean ok=true;
+//    private boolean checkView(){
+//        boolean ok=true;
+//
+//        if (questionET.toString().isEmpty()) ok=false;
+//        if (answer1ET.toString().isEmpty()) ok=false;
+//        if (answer2ET.toString().isEmpty()) ok=false;
+//        if (answer3ET.toString().isEmpty()) ok=false;
+//        if (answer4ET.toString().isEmpty()) ok=false;
+//        if (chAnswerCorrect1.isChecked()==false && chAnswerCorrect2.isChecked()==false &&
+//                chAnswerCorrect3.isChecked()==false && chAnswerCorrect4.isChecked()==false) ok=false;
+//
+//        return ok;
+//    }
 
-        if (questionET.toString().isEmpty()) ok=false;
-        if (answer1ET.toString().isEmpty()) ok=false;
-        if (answer2ET.toString().isEmpty()) ok=false;
-        if (answer3ET.toString().isEmpty()) ok=false;
-        if (answer4ET.toString().isEmpty()) ok=false;
-        if (chAnswerCorrect1.isChecked()==false && chAnswerCorrect2.isChecked()==false &&
-                chAnswerCorrect3.isChecked()==false && chAnswerCorrect4.isChecked()==false) ok=false;
-
-        return ok;
-    }
-
-    private void createQuestion(){
+    private void createQuestion() {
         RealmList<Answer> answers = new RealmList<>();
-        answers.add(new Answer(answer1ET.getText().toString(),chAnswerCorrect1.isChecked()));
-        answers.add(new Answer(answer2ET.getText().toString(),chAnswerCorrect2.isChecked()));
-        answers.add(new Answer(answer3ET.getText().toString(),chAnswerCorrect3.isChecked()));
-        answers.add(new Answer(answer4ET.getText().toString(),chAnswerCorrect4.isChecked()));
-        questions.add(new Question(questionET.getText().toString(),answers));
+        answers.add(new Answer(answer1ET.getText().toString(), chAnswerCorrect1.isChecked()));
+        answers.add(new Answer(answer2ET.getText().toString(), chAnswerCorrect2.isChecked()));
+        answers.add(new Answer(answer3ET.getText().toString(), chAnswerCorrect3.isChecked()));
+        answers.add(new Answer(answer4ET.getText().toString(), chAnswerCorrect4.isChecked()));
+        questions.add(new Question(questionET.getText().toString(), answers));
     }
 
-    private void updateQuestion(){
+    private void updateQuestion() {
         RealmList<Answer> answers = new RealmList<>();
-        answers.add(new Answer(answer1ET.getText().toString(),chAnswerCorrect1.isChecked()));
-        answers.add(new Answer(answer2ET.getText().toString(),chAnswerCorrect2.isChecked()));
-        answers.add(new Answer(answer3ET.getText().toString(),chAnswerCorrect3.isChecked()));
-        answers.add(new Answer(answer4ET.getText().toString(),chAnswerCorrect4.isChecked()));
-        questions.set(currentItem, new Question(questionET.getText().toString(),answers));
+        answers.add(new Answer(answer1ET.getText().toString(), chAnswerCorrect1.isChecked()));
+        answers.add(new Answer(answer2ET.getText().toString(), chAnswerCorrect2.isChecked()));
+        answers.add(new Answer(answer3ET.getText().toString(), chAnswerCorrect3.isChecked()));
+        answers.add(new Answer(answer4ET.getText().toString(), chAnswerCorrect4.isChecked()));
+        questions.set(currentItem, new Question(questionET.getText().toString(), answers));
     }
 
-    private void readQuestion(){
+    private void readQuestion() {
         Question currentQuestion = questions.get(currentItem);
         questionET.setText(currentQuestion.getQuestion());
         RealmList<Answer> answers = currentQuestion.getAnswers();
@@ -186,24 +210,24 @@ public class NewQuestionList extends Activity{
         chAnswerCorrect4.setChecked(answers.get(3).isCorrect());
     }
 
-    private void ask(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Сохранить вопрос?");
-        alertDialog.setPositiveButton("Да", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                createQuestion();
-            }
-        });
-        alertDialog.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-        alertDialog.show();
-    }
+//    private void ask(){
+//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+//        alertDialog.setTitle("Сохранить вопрос?");
+//        alertDialog.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                createQuestion();
+//            }
+//        });
+//        alertDialog.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//            }
+//        });
+//        alertDialog.show();
+//    }
 
-    private void updateNumber(){
+    private void updateNumber() {
         numberTV.setText(String.valueOf(currentItem + 1));
     }
 }
