@@ -34,7 +34,7 @@ public class NewTest extends Activity{
     @OnClick(R.id.new_question)
     public void newQuestion(){
         Intent intent = new Intent(this, NewQuestionList.class);
-        intent.putExtra("name",name_test.toString());
+        intent.putExtra("name",name_test.getText().toString());
         intent.putExtra("complexity",complexity.getProgress());
         startActivity(intent);
     }

@@ -1,19 +1,12 @@
 package com.gangrave88.testconstructor;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +55,8 @@ public class NewQuestionList extends Activity {
 
         Intent intent = getIntent();
 
+        Realm.init(this);
+
         name = intent.getStringExtra("name");
         complexity = intent.getIntExtra("complexity",3);
 
@@ -87,29 +82,34 @@ public class NewQuestionList extends Activity {
         Test test = realm.createObject(Test.class);
         test.setName(name);
         test.setComplexity(complexity);
-        test.setQuestions(questions);
+
+        for (Question q:questions){
+            Question question = realm.createObject(Question.class);
+            question.setQuestion(q.question);
+            for (Answer a:q.answers){
+                Answer answer = realm.createObject(Answer.class);
+                answer.setAnswer(a.answer);
+                answer.setCorrect(a.correct);
+                question.answers.add(answer);
+            }
+            test.questions.add(question);
+        }
+
         realm.commitTransaction();
+        this.finish();
     }
 
     @OnClick(R.id.next)
     public void nextQuestion() {
-//        if (checkView()) {
         checkUpdateCreate();
         currentItem++;
         checkClearRead();
         btnEnableDisable();
-//        }
-//        else {
-//            masage();
-//        }
         updateNumber();
     }
 
     @OnClick(R.id.previous)
     public void previousQuestion() {
-//        if (!checkAllEmpty()) {
-//            ask();
-//        }
         currentItem--;
         checkClearRead();
         btnEnableDisable();
@@ -123,10 +123,6 @@ public class NewQuestionList extends Activity {
             btnPrevious.setEnabled(true);
         }
     }
-
-//    private void masage(){
-//        Toast.makeText(this,"Не все поля заполнены!",Toast.LENGTH_SHORT).show();
-//    }
 
     private void checkUpdateCreate() {
         if (questions.isEmpty() || currentItem > questions.size() - 1) {

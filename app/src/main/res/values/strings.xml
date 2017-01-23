@@ -18,4 +18,6 @@
     <string name="save">Записать</string>
     <string name="next">Следующий</string>
     <string name="previous">Предыдущий</string>
+    <string name="read_db">Читать из базы</string>
+    <string name="clear_db">Очистить базу</string>
 </resources>

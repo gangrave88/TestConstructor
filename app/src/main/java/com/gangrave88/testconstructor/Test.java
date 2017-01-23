@@ -10,7 +10,7 @@ public class Test extends RealmObject{
     public int complexity;
     public RealmList<Question> questions;
 
-    public Test() {
+    public Test(){
         super();
     }
 

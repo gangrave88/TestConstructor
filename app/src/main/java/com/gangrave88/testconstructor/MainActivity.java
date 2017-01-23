@@ -3,12 +3,19 @@ package com.gangrave88.testconstructor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String DB = "BD";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,11 +23,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        Realm.init(this);
     }
 
     @OnClick(R.id.new_test)
     public void createNewTest(){
         Intent intent = new Intent(this, NewTest.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.test_read_db)
+    public void read_db(){
+        Realm realm = Realm.getDefaultInstance();
+
+        RealmResults<Test> testRealmQuery = realm.where(Test.class).findAll();
+        for (Test test:testRealmQuery){
+            Toast.makeText(this,test.getName(),Toast.LENGTH_SHORT).show();
+        }
+        realm.close();
+    }
+
+    @OnClick(R.id.clear_db)
+    public void clearDB(){
+        Realm realm = Realm.getDefaultInstance();
+        RealmResults<Test> testRealmQuery = realm.where(Test.class).findAll();
+        realm.beginTransaction();
+        testRealmQuery.deleteAllFromRealm();
+        realm.commitTransaction();
+        realm.close();
     }
 }
