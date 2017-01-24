@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -22,7 +23,7 @@ public class NewQuestionList extends Activity {
     int complexity;
 
     @BindView(R.id.previous)
-    Button btnPrevious;
+    ImageButton btnPrevious;
     @BindView(R.id.question)
     EditText questionET;
     @BindView(R.id.answer1)

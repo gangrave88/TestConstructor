@@ -51,4 +51,10 @@ public class MainActivity extends AppCompatActivity {
         realm.commitTransaction();
         realm.close();
     }
+
+    @OnClick(R.id.list_test)
+    public void openListTests(){
+        Intent intent = new Intent(this,ListTests.class);
+        startActivity(intent);
+    }
 }
