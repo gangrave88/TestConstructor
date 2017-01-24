@@ -53,10 +53,9 @@ public class NewQuestionList extends Activity {
 
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-
         Realm.init(this);
 
+        Intent intent = getIntent();
         name = intent.getStringExtra("name");
         complexity = intent.getIntExtra("complexity",3);
 

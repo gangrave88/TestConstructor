@@ -15,8 +15,6 @@ import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String DB = "BD";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.test_read_db)
-    public void read_db(){
+    public void readDB(){
         Realm realm = Realm.getDefaultInstance();
 
         RealmResults<Test> testRealmQuery = realm.where(Test.class).findAll();

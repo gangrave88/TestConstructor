@@ -37,6 +37,8 @@ public class NewTest extends Activity{
         intent.putExtra("name",name_test.getText().toString());
         intent.putExtra("complexity",complexity.getProgress());
         startActivity(intent);
+
+        this.finish();
     }
 
     @OnClick(R.id.save_test)
