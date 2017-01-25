@@ -17,7 +17,7 @@ public class NewTest extends Activity{
 
     RealmList<Question> questions;
     @BindView(R.id.name_test)TextView name_test;
-    @BindView(R.id.complexity)SeekBar complexity;
+    @BindView(R.id.difficult)SeekBar complexity;
     @BindView(R.id.question_list) ListView question_list;
 
 
@@ -35,7 +35,7 @@ public class NewTest extends Activity{
     public void newQuestion(){
         Intent intent = new Intent(this, NewQuestionList.class);
         intent.putExtra("name",name_test.getText().toString());
-        intent.putExtra("complexity",complexity.getProgress());
+        intent.putExtra("difficult",complexity.getProgress());
         startActivity(intent);
 
         this.finish();
@@ -44,7 +44,7 @@ public class NewTest extends Activity{
     @OnClick(R.id.save_test)
     public void saveTest(){
 //        Realm realm = Realm.getDefaultInstance();
-//        Test test = new Test(name_test.toString(),complexity.getProgress(),questions);
+//        Test test = new Test(name_test.toString(),difficult.getProgress(),questions);
 //
 //        realm.beginTransaction();
 //        realm.copyToRealm(test);

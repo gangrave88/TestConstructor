@@ -3,7 +3,6 @@ package com.gangrave88.testconstructor;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -58,7 +57,7 @@ public class NewQuestionList extends Activity {
 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
-        complexity = intent.getIntExtra("complexity",3);
+        complexity = intent.getIntExtra("difficult",3);
 
         questions = new RealmList<>();
         currentItem = 0;
@@ -81,7 +80,7 @@ public class NewQuestionList extends Activity {
         realm.beginTransaction();
         Test test = realm.createObject(Test.class);
         test.setName(name);
-        test.setComplexity(complexity);
+        test.setDifficult(complexity);
 
         for (Question q:questions){
             Question question = realm.createObject(Question.class);

@@ -7,16 +7,16 @@ import io.realm.RealmObject;
 
 public class Test extends RealmObject{
     public String name;
-    public int complexity;
+    public int difficult;
     public RealmList<Question> questions;
 
     public Test(){
         super();
     }
 
-    public Test(String name, int complexity, RealmList<Question> questions) {
+    public Test(String name, int difficult, RealmList<Question> questions) {
         this.name = name;
-        this.complexity = complexity;
+        this.difficult = difficult;
         this.questions = questions;
     }
 
@@ -28,12 +28,12 @@ public class Test extends RealmObject{
         this.name = name;
     }
 
-    public int getComplexity() {
-        return complexity;
+    public int getDifficult() {
+        return difficult;
     }
 
-    public void setComplexity(int complexity) {
-        this.complexity = complexity;
+    public void setDifficult(int difficult) {
+        this.difficult = difficult;
     }
 
     public List<Question> getQuestions() {

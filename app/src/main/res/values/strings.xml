@@ -4,7 +4,7 @@
     <string name="list_test">Список тестов</string>
     <string name="stat">Статистика</string>
     <string name="name_test">Название теста</string>
-    <string name="complexity">Сложность</string>
+    <string name="difficult">Сложность</string>
     <string name="question">Вопрос</string>
     <string name="option">Вариант</string>
     <string name="new_test">Новый тест</string>
