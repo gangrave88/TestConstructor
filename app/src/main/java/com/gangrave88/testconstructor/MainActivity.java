@@ -57,4 +57,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,ListTests.class);
         startActivity(intent);
     }
+
+    @OnClick(R.id.button_settings)
+    public void settings(){
+        Intent intent = new Intent(this,Settings.class);
+        startActivity(intent);
+    }
 }

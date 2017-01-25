@@ -16,6 +16,7 @@ public class TestAdapterList extends RealmBaseAdapter<Test> implements ListAdapt
 
     private static class ViewHolder{
         TextView test;
+        TextView difficult;
     }
 
     public TestAdapterList(@NonNull Context context, @Nullable OrderedRealmCollection<Test> data) {
@@ -30,6 +31,7 @@ public class TestAdapterList extends RealmBaseAdapter<Test> implements ListAdapt
                     inflate(R.layout.simple_list_item,parent,false);
             viewHolder = new ViewHolder();
             viewHolder.test = (TextView)convertView.findViewById(R.id.simple_list_item1);
+            viewHolder.difficult = (TextView)convertView.findViewById(R.id.difficult);
             convertView.setTag(viewHolder);
         }
         else {
@@ -38,6 +40,7 @@ public class TestAdapterList extends RealmBaseAdapter<Test> implements ListAdapt
 
         Test test = adapterData.get(position);
         viewHolder.test.setText(test.getName());
+        viewHolder.difficult.setText(test.getDifficult());
 
         return convertView;
     }
