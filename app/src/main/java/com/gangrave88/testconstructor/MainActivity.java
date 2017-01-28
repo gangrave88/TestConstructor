@@ -7,9 +7,12 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
@@ -23,6 +26,18 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Realm.init(this);
+
+        updateDB();
+    }
+
+    private void updateDB(){
+        RealmConfiguration conf0 = new RealmConfiguration.Builder().
+                schemaVersion(0).
+                migration(new MigrationRealm()).
+                build();
+
+        Realm realm = Realm.getInstance(conf0);
+        realm.close();
     }
 
     @OnClick(R.id.new_test)

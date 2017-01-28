@@ -13,7 +13,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/simple_list_item1"
         app:layout_constraintLeft_toRightOf="@+id/simple_list_item1"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="0dp"

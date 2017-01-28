@@ -40,7 +40,7 @@ public class TestAdapterList extends RealmBaseAdapter<Test> implements ListAdapt
 
         Test test = adapterData.get(position);
         viewHolder.test.setText(test.getName());
-        viewHolder.difficult.setText(test.getDifficult());
+        viewHolder.difficult.setText(String.valueOf(test.getDifficult()));
 
         return convertView;
     }

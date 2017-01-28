@@ -19,11 +19,12 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="36sp" />
 
     <Button
         android:text="@string/begin_test"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/begin_test"
         android:layout_marginStart="16dp"

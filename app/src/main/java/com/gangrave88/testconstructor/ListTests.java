@@ -3,9 +3,11 @@ package com.gangrave88.testconstructor;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -31,4 +33,9 @@ public class ListTests extends Activity {
         TestAdapterList testAdapterList = new TestAdapterList(this,tests);
         listTests.setAdapter(testAdapterList);
     }
+
+//    @OnItemClick(R.id.list_test)
+//    public void clicIrem(int position){
+//        Toast.makeText(this,listTests.getItemAtPosition(position).getClass().getName(),Toast.LENGTH_SHORT).show();
+//    }
 }
