@@ -3,17 +3,12 @@ package com.gangrave88.testconstructor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
-
-import java.io.FileNotFoundException;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
