@@ -7,23 +7,32 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_height="wrap_content"
         android:id="@+id/difficult"
-        android:layout_width="0dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/simple_list_item1"
-        app:layout_constraintLeft_toRightOf="@+id/simple_list_item1"
+        android:layout_width="60dp"
         android:textSize="30sp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_weight="1"
+        android:width="3dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="60dp" />
 
     <TextView
         android:layout_width="0dp"
-        android:layout_height="36dp"
         android:id="@+id/simple_list_item1"
-        android:textSize="30sp"
-        android:layout_marginEnd="48dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="48dp"
+        android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_weight="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/difficult"
+        android:layout_height="42dp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:id="@+id/language"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/simple_list_item1"
+        app:layout_constraintRight_toLeftOf="@+id/difficult"
+        android:layout_height="18dp" />
+
 </android.support.constraint.ConstraintLayout>

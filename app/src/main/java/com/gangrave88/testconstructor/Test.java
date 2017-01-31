@@ -36,7 +36,7 @@ public class Test extends RealmObject{
         this.difficult = difficult;
     }
 
-    public List<Question> getQuestions() {
+    public RealmList<Question> getQuestions() {
         return questions;
     }
 
