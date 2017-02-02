@@ -22,13 +22,24 @@ public class MainActivity extends AppCompatActivity {
 
         Realm.init(this);
 
+        createDB();
+
         updateDB();
+    }
+
+    private void createDB(){
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().
+                name(Realm.DEFAULT_REALM_NAME).
+                schemaVersion(0).
+                deleteRealmIfMigrationNeeded().
+                build();
+        Realm.setDefaultConfiguration(realmConfiguration);
     }
 
     private void updateDB(){
         RealmConfiguration conf0 = new RealmConfiguration.Builder().
                 name(Realm.DEFAULT_REALM_NAME).
-                schemaVersion(2).
+                schemaVersion(0).
                 migration(new MigrationRealm()).
                 build();
 
