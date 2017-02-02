@@ -5,6 +5,7 @@ import io.realm.RealmObject;
 
 public class Question extends RealmObject{
     public String question;
+    public Answer currentAnswer;
     public RealmList<Answer> answers;
 
     public Question(){
@@ -30,5 +31,13 @@ public class Question extends RealmObject{
 
     public void setAnswers(RealmList<Answer> answers) {
         this.answers = answers;
+    }
+
+    public Answer getCurrentAnswer() {
+        return currentAnswer;
+    }
+
+    public void setCurrentAnswer(Answer currentAnswer) {
+        this.currentAnswer = currentAnswer;
     }
 }
