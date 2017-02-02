@@ -2,6 +2,8 @@ package com.gangrave88.testconstructor;
 
 import android.widget.Toast;
 
+import java.util.Date;
+
 import io.realm.DynamicRealm;
 import io.realm.DynamicRealmObject;
 import io.realm.RealmMigration;
@@ -23,6 +25,20 @@ public class MigrationRealm implements RealmMigration {
                     obj.set("difficult",obj.getInt("complexity"));
                 }
             }).removeField("complexity");
+            oldVersion++;
+        }
+
+        if (oldVersion==1){
+            RealmObjectSchema testSchema = realmSchema.get("Test");
+
+            testSchema.addField("id",int.class);
+            testSchema.addField("dateCreate", Date.class);
+            testSchema.addField("currentQuestion", Question.class);
+            testSchema.addField("complete", boolean.class);
+
+            RealmObjectSchema questionSchema = realmSchema.get("Question");
+
+            questionSchema.addField("currentAnswer",Answer.class);
             oldVersion++;
         }
     }

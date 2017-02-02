@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateDB(){
         RealmConfiguration conf0 = new RealmConfiguration.Builder().
-                schemaVersion(0).
+                name(Realm.DEFAULT_REALM_NAME).
+                schemaVersion(2).
                 migration(new MigrationRealm()).
                 build();
 

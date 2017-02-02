@@ -24,7 +24,9 @@ public class Testing extends Activity {
 
     int currentId;
     String name;
+    Test currentTest;
     Question currentQuestion;
+    Realm realm;
 
     RealmList<Question> questions;
 
@@ -40,8 +42,9 @@ public class Testing extends Activity {
 
         name = intent.getStringExtra("name");
 
-        Realm realm = Realm.getDefaultInstance();
-        questions = realm.where(Test.class).equalTo("name",name).findFirst().getQuestions();
+        realm = Realm.getDefaultInstance();
+        currentTest = realm.where(Test.class).equalTo("name",name).findFirst();
+        questions = currentTest.getQuestions();
 
         currentId = 0;
 
@@ -49,32 +52,41 @@ public class Testing extends Activity {
     }
 
     private void getNextQuestion(){
-        currentQuestion = questions.get(currentId);
+        if (questions.size()-1>=currentId) {
+            currentQuestion = questions.get(currentId);
 
-        questionTV.setText(currentQuestion.getQuestion());
-        answerB1.setText(currentQuestion.answers.get(0).getAnswer());
-        answerB2.setText(currentQuestion.answers.get(1).getAnswer());
-        answerB3.setText(currentQuestion.answers.get(2).getAnswer());
-        answerB4.setText(currentQuestion.answers.get(3).getAnswer());
+            questionTV.setText(currentQuestion.getQuestion());
+            answerB1.setText(currentQuestion.answers.get(0).getAnswer());
+            answerB2.setText(currentQuestion.answers.get(1).getAnswer());
+            answerB3.setText(currentQuestion.answers.get(2).getAnswer());
+            answerB4.setText(currentQuestion.answers.get(3).getAnswer());
+        }
+        else endTest();
+    }
+
+    private void endTest(){
+        realm.beginTransaction();
+        currentTest.setComplete(true);
+        realm.commitTransaction();
     }
 
     @OnClick({R.id.answer1,R.id.answer2,R.id.answer3,R.id.answer4})
     public void clickAnswer(Button btn){
         switch (btn.getId()){
             case(R.id.answer1):{
-                answer(0);
+                answer(0,btn);
                 break;
             }
             case(R.id.answer2):{
-                answer(1);
+                answer(1,btn);
                 break;
             }
             case(R.id.answer3):{
-                answer(2);
+                answer(2,btn);
                 break;
             }
             case(R.id.answer4):{
-                answer(3);
+                answer(3,btn);
                 break;
             }
         }
@@ -82,12 +94,28 @@ public class Testing extends Activity {
         getNextQuestion();
     }
 
-    private void answer(int id){
-        if (currentQuestion.getAnswers().get(id).isCorrect()){
-            Toast.makeText(this,"Правельный ответ!!!!",Toast.LENGTH_SHORT).show();
+    private void answer(int id,Button btn){
+        Answer currentAnswer = currentQuestion.getAnswers().get(id);
+        if (currentAnswer.isCorrect()){
+            btn.setBackgroundResource(R.drawable.correct_answer);
         }
         else{
-            Toast.makeText(this,"Лузер!!! ))",Toast.LENGTH_SHORT).show();
+            btn.setBackgroundResource(R.drawable.uncorrect_answer);
         }
+        realm.beginTransaction();
+        currentQuestion.setCurrentAnswer(currentAnswer);
+        realm.commitTransaction();
+    }
+
+    @OnClick(R.id.test_previous_question)
+    public void previousQuestion(){
+        currentId--;
+        getNextQuestion();
+    }
+
+    @OnClick(R.id.test_next_question)
+    public void nextQuestion(){
+        currentId++;
+        getNextQuestion();
     }
 }
