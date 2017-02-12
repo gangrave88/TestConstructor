@@ -72,13 +72,15 @@
         app:layout_constraintLeft_toLeftOf="@+id/answer2" />
 
     <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:id="@+id/progressBar2"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="0dp"
+        android:layout_marginBottom="0dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -89,7 +91,8 @@
         android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:contentDescription="@string/next_button" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -101,24 +104,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="32dp" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/stat_notify_error"
-        android:id="@+id/imageButton4"
-        app:layout_constraintBottom_toTopOf="@+id/progressBar2"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintRight_toLeftOf="@+id/test_next_question"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toRightOf="@+id/test_previous_question"
-        android:layout_marginLeft="8dp" />
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/previous_button" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/textView3"
         android:layout_marginStart="16dp"
@@ -129,8 +119,23 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginRight="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton4"
+        tools:ignore="UnknownId"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.100000024" />
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:srcCompat="@drawable/correct_icon"
+        android:id="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/progressBar2"
+        app:layout_constraintRight_toLeftOf="@+id/test_next_question"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/test_previous_question"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="24dp" />
 
 </android.support.constraint.ConstraintLayout>

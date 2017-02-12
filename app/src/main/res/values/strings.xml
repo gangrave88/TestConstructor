@@ -21,4 +21,6 @@
     <string name="read_db">Читать из базы</string>
     <string name="clear_db">Очистить базу</string>
     <string name="begin_test">Начать тест</string>
+    <string name="previous_button">Предыдущий вопрос</string>
+    <string name="next_button">Следующий вопрос</string>
 </resources>

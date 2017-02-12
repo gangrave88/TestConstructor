@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         createDB();
 
-        updateDB();
+//        updateDB();
     }
 
     private void createDB(){
