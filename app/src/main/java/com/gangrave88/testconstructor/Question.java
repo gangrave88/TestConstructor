@@ -4,9 +4,9 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 
 public class Question extends RealmObject{
-    public String question;
-    public Answer currentAnswer;
-    public RealmList<Answer> answers;
+    private String question;
+    private Answer currentAnswer;
+    private RealmList<Answer> answers;
 
     public Question(){
         super();
@@ -39,5 +39,16 @@ public class Question extends RealmObject{
 
     public void setCurrentAnswer(Answer currentAnswer) {
         this.currentAnswer = currentAnswer;
+    }
+
+    public void setOneAnswer(Answer answer){
+        answers.add(answer);
+    }
+
+    public boolean answerIsCorrect(String answer){
+        for (Answer a:answers){
+            if (answer.equals(a)) return true;
+        }
+        return false;
     }
 }

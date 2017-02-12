@@ -5,9 +5,12 @@ import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 public class Test extends RealmObject{
+    @PrimaryKey
     public int id;
+
     public String name;
     public int difficult;
     public Date dateCreate;

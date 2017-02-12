@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmResults;
 
 public class Testing extends Activity {
 
@@ -27,6 +27,7 @@ public class Testing extends Activity {
     Test currentTest;
     Question currentQuestion;
     Realm realm;
+    List<Button> btnList;
 
     RealmList<Question> questions;
 
@@ -48,6 +49,11 @@ public class Testing extends Activity {
 
         currentId = 0;
 
+        btnList.add(answerB1);
+        btnList.add(answerB2);
+        btnList.add(answerB3);
+        btnList.add(answerB4);
+
         getNextQuestion();
     }
 
@@ -56,10 +62,10 @@ public class Testing extends Activity {
             currentQuestion = questions.get(currentId);
 
             questionTV.setText(currentQuestion.getQuestion());
-            answerB1.setText(currentQuestion.answers.get(0).getAnswer());
-            answerB2.setText(currentQuestion.answers.get(1).getAnswer());
-            answerB3.setText(currentQuestion.answers.get(2).getAnswer());
-            answerB4.setText(currentQuestion.answers.get(3).getAnswer());
+
+            for(int n = 0; n<4;n++){
+                btnList.get(n).setText(currentQuestion.getAnswers().get(n).getAnswer());
+            }
         }
         else endTest();
     }

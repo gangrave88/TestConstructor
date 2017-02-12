@@ -4,8 +4,8 @@ import io.realm.RealmObject;
 
 public class Answer extends RealmObject{
 
-    public String answer;
-    public boolean correct;
+    private String answer;
+    private boolean correct;
 
     public Answer(){
         super();

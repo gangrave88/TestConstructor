@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private void createDB(){
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().
                 name(Realm.DEFAULT_REALM_NAME).
-                schemaVersion(0).
+                schemaVersion(1).
                 deleteRealmIfMigrationNeeded().
                 build();
         Realm.setDefaultConfiguration(realmConfiguration);
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateDB(){
         RealmConfiguration conf0 = new RealmConfiguration.Builder().
                 name(Realm.DEFAULT_REALM_NAME).
-                schemaVersion(0).
+                schemaVersion(1).
                 migration(new MigrationRealm()).
                 build();
 

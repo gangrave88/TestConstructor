@@ -84,12 +84,12 @@ public class NewQuestionList extends Activity {
 
         for (Question q:questions){
             Question question = realm.createObject(Question.class);
-            question.setQuestion(q.question);
-            for (Answer a:q.answers){
+            question.setQuestion(q.getQuestion());
+            for (Answer a:q.getAnswers()){
                 Answer answer = realm.createObject(Answer.class);
-                answer.setAnswer(a.answer);
-                answer.setCorrect(a.correct);
-                question.answers.add(answer);
+                answer.setAnswer(a.getAnswer());
+                answer.setCorrect(a.isCorrect());
+                question.setOneAnswer(answer);
             }
             test.questions.add(question);
         }
